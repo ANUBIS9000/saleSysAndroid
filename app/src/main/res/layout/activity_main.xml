@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.anubis9000.saleandorid.MainActivity">
+
+    <!--<WebView-->
+        <!--android:id="@+id/webView1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentTop="true"/>-->
+
+    <com.tencent.smtt.sdk.WebView
+        android:id="@+id/mainWebview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:textColor="#373636"
+        android:textSize="14sp">
+    </com.tencent.smtt.sdk.WebView>
+
+</android.support.constraint.ConstraintLayout>

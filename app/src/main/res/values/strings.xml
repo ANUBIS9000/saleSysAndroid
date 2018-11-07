@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">手机H5测试</string>
+    <string name="backend_url">http://这里填写域名?rememberMe=true</string>
+</resources>
