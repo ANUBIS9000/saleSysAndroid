@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.anubis9000.saleandorid.SSL.MyHttpsClient;
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     private com.tencent.smtt.sdk.WebView tencent_webview;
 //    private String backendUrl = MyApplication.getContext().getString(R.string.backend_url);
 
-    private String backendUrl = "http://这里填写域名?rememberMe=true";
+    private String backendUrl = "http://www.baidu.com?rememberMe=true";
 
     private String url = backendUrl;
 
@@ -175,29 +176,45 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         init();
 
-//        verifyStoragePermissions(this);
-//
-//        //初始化录音
-//        AudioTest.getInstance().createObject(11025);
-//
-//        //拿到手机号码
-//        TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//            return;
-//        }
-//        String deviceid = tm.getDeviceId();
-//        String tel = tm.getLine1Number();//手机号码
-//        callInfoVo.setSellerPhone(tel);
-//
-//        String imei = tm.getSimSerialNumber();
-//        String imsi = tm.getSubscriberId();
+        verifyStoragePermissions(this);
+
+        //初始化录音
+        AudioTest.getInstance().createObject(11025);
+
+        //拿到手机号码
+        TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        String deviceid = tm.getDeviceId();
+        String tel = tm.getLine1Number();//手机号码
+        callInfoVo.setSellerPhone(tel);
+
+        String imei = tm.getSimSerialNumber();
+        String imsi = tm.getSubscriberId();
+
+
+        Uri uri = getIntent().getData();
+        StringBuilder sb = new StringBuilder();
+        if(uri!=null){
+            // 唤起链接
+            sb.append("string : ").append(getIntent().getDataString()).append("\n");
+            sb.append("scheme : ").append(uri.getScheme()).append("\n");
+            sb.append("host : ").append(uri.getHost()).append("\n");
+            sb.append("port : ").append(uri.getPort()).append("\n");
+            sb.append("path : ").append(uri.getPath()).append("\n");
+            // 接收唤起的参数
+            sb.append("name : ").append(uri.getQueryParameter("name")).append("\n");
+            sb.append("page : ").append(uri.getQueryParameter("page"));
+            Toast.makeText(this, sb.toString(), Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -256,28 +273,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-//                if(callInfoVo.getCustomerPhone()==null){
-//                    Log.e("mylog", "拨打之前没有成功获取电话信息");
-//                    return;
-//                }
-//
-//                //发送方案2
-//                List<NameValuePair> nvp = new ArrayList<>();
-//                nvp.add(new BasicNameValuePair("sellerId", callInfoVo.getSellerId()));
-//                nvp.add(new BasicNameValuePair("sellerName", callInfoVo.getSellerName()));
-//                nvp.add(new BasicNameValuePair("schoolId", callInfoVo.getSchoolId()));
-//                nvp.add(new BasicNameValuePair("linkMan", callInfoVo.getLinkMan()));
-//                nvp.add(new BasicNameValuePair("linkManJob", callInfoVo.getLinkManJob()));
-//                nvp.add(new BasicNameValuePair("customerId", callInfoVo.getCustomerId()));
-//                nvp.add(new BasicNameValuePair("productId", callInfoVo.getProductId()));
-//                nvp.add(new BasicNameValuePair("phone", callInfoVo.getCustomerPhone()));
-//                nvp.add(new BasicNameValuePair("sellerPhone", "13126528823"));
-//                nvp.add(new BasicNameValuePair("callOutStartTime", callInfoVo.getCallOutStartTime()));
-//                nvp.add(new BasicNameValuePair("fwdAnswerTime", callInfoVo.getFwdAnswerTime()));
-//                nvp.add(new BasicNameValuePair("callEndTime", callInfoVo.getCallEndTime()));
-//                nvp.add(new BasicNameValuePair("waveName", callInfoVo.getWaveName()));
-//                nvp.add(new BasicNameValuePair("callId", callInfoVo.getCallId()));
-//
+                if(callInfoVo.getCustomerPhone()==null){
+                    Log.e("mylog", "拨打之前没有成功获取电话信息");
+                    return;
+                }
+
+                //发送方案2
+                List<NameValuePair> nvp = new ArrayList<>();
+                nvp.add(new BasicNameValuePair("sellerId", callInfoVo.getSellerId()));
+                nvp.add(new BasicNameValuePair("sellerName", callInfoVo.getSellerName()));
+                nvp.add(new BasicNameValuePair("schoolId", callInfoVo.getSchoolId()));
+                nvp.add(new BasicNameValuePair("linkMan", callInfoVo.getLinkMan()));
+                nvp.add(new BasicNameValuePair("linkManJob", callInfoVo.getLinkManJob()));
+                nvp.add(new BasicNameValuePair("customerId", callInfoVo.getCustomerId()));
+                nvp.add(new BasicNameValuePair("productId", callInfoVo.getProductId()));
+                nvp.add(new BasicNameValuePair("phone", callInfoVo.getCustomerPhone()));
+                nvp.add(new BasicNameValuePair("sellerPhone", "13126528823"));
+                nvp.add(new BasicNameValuePair("callOutStartTime", callInfoVo.getCallOutStartTime()));
+                nvp.add(new BasicNameValuePair("fwdAnswerTime", callInfoVo.getFwdAnswerTime()));
+                nvp.add(new BasicNameValuePair("callEndTime", callInfoVo.getCallEndTime()));
+                nvp.add(new BasicNameValuePair("waveName", callInfoVo.getWaveName()));
+                nvp.add(new BasicNameValuePair("callId", callInfoVo.getCallId()));
+
 //                try {
 //                    String backendUrl = MyApplication.getContext().getString(R.string.backend_url);
 ////                    String backendUrl = "http://192.168.1.175";
@@ -288,9 +305,9 @@ public class MainActivity extends AppCompatActivity {
 //                } catch (IOException e) {
 //                    Log.e("mylog", e.toString());
 //                }
-//
-//
-//                // 在这里进行 http request.网络请求相关操作
+
+
+                // 在这里进行 http request.网络请求相关操作
 //                Message msg = new Message();
 //                Bundle data = new Bundle();
 //                data.putString("value", "请求结果");
@@ -303,134 +320,134 @@ public class MainActivity extends AppCompatActivity {
         public void onCallStateChanged(int state, String incomingNumber) {
 
 //            // 注意，方法必须写在super方法后面，否则incomingNumber无法获取到值。
-//
-//            super.onCallStateChanged(state, incomingNumber);
-//
-//            Log.i(TAG, "有状态");
-//
-//            switch (state) {
-//
-//                case TelephonyManager.CALL_STATE_IDLE: {
-//                    if (!"CALL_STATE_IDLE".equals(phoneState)) {
-//                        if ("CALL_STATE_OFFHOOK".equals(phoneState)) {
-//
-//                            // System.out.println("挂断");
-//                            Log.i(TAG, "挂断");
-//
-//                            Calendar c = Calendar.getInstance();
-//                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//                            String nowTime = sdf.format(c.getTime());
-//                            Log.i(TAG, nowTime);
-//                            callInfoVo.setCallEndTime(nowTime);
-//
-//
-//                            // MyApplication.getContext().stopService(new
-//                            // Intent(MyApplication.getContext(),
-//                            // AudioRecorderService.class));
-//
-//                            try {
-//                                if (!recorder.isCommingNumber() && recorder.isStarted()) {
-//                                    Log.i(TAG, "已挂断 关闭录音机");
-//                                    recorder.stop();
-//                                }
-//                            }catch(Exception e){
-//                                e.printStackTrace();
+
+            super.onCallStateChanged(state, incomingNumber);
+
+            Log.i(TAG, "有状态");
+
+            switch (state) {
+
+                case TelephonyManager.CALL_STATE_IDLE: {
+                    if (!"CALL_STATE_IDLE".equals(phoneState)) {
+                        if ("CALL_STATE_OFFHOOK".equals(phoneState)) {
+
+                            // System.out.println("挂断");
+                            Log.i(TAG, "挂断");
+
+                            Calendar c = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            String nowTime = sdf.format(c.getTime());
+                            Log.i(TAG, nowTime);
+                            callInfoVo.setCallEndTime(nowTime);
+
+
+                            // MyApplication.getContext().stopService(new
+                            // Intent(MyApplication.getContext(),
+                            // AudioRecorderService.class));
+
+                            try {
+                                if (!recorder.isCommingNumber() && recorder.isStarted()) {
+                                    Log.i(TAG, "已挂断 关闭录音机");
+                                    recorder.stop();
+                                }
+                            }catch(Exception e){
+                                e.printStackTrace();
+                            }
+
+                            //测试获取话单信息
+                            //获取通话记录
+                            ContentResolver cr;
+                            cr = MyApplication.getContext().getContentResolver();
+                            String callHistoryListStr = PhoneInfoUtil.getCallHistoryList(null, cr);
+                            Log.i("phoneinfo", "请求结果为-->" + callHistoryListStr);
+                            if (!"".equals(callHistoryListStr)) {
+                                callInfoVo.setFwdAnswerTime(callHistoryListStr);
+                            }
+
+//                            if(AudioTest.getInstance().isInitSucces()){
+//                                AudioTest.getInstance().stopAudio();
+//                                Log.i(TAG, "已挂断 关闭录音机");
+//                            }else{
+//                                Log.i(TAG, "录音及没有成功初始化");
 //                            }
-//
-//                            //测试获取话单信息
-//                            //获取通话记录
-//                            ContentResolver cr;
-//                            cr = MyApplication.getContext().getContentResolver();
-//                            String callHistoryListStr = PhoneInfoUtil.getCallHistoryList(null, cr);
-//                            Log.i("phoneinfo", "请求结果为-->" + callHistoryListStr);
-//                            if (!"".equals(callHistoryListStr)) {
-//                                callInfoVo.setFwdAnswerTime(callHistoryListStr);
-//                            }
-//
-////                            if(AudioTest.getInstance().isInitSucces()){
-////                                AudioTest.getInstance().stopAudio();
-////                                Log.i(TAG, "已挂断 关闭录音机");
-////                            }else{
-////                                Log.i(TAG, "录音及没有成功初始化");
-////                            }
-//
-//
-//                            // 开启一个子线程，进行网络操作，等待有返回结果，使用handler通知UI
-//                            new Thread(networkTask).start();
-//
-//                        }
-//
-//                        phoneState = "CALL_STATE_IDLE";
-//                    }
-//
-//                    break;
-//                }
-//                case TelephonyManager.CALL_STATE_OFFHOOK: {
-//                    if (!"CALL_STATE_OFFHOOK".equals(phoneState)) {
-//                        phoneState = "CALL_STATE_OFFHOOK";
-//
-//                        // System.out.println("接听");
-//                        Log.i(TAG, "接听");
-//
-//                        Calendar c = Calendar.getInstance();
-//                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//                        String nowTime = sdf.format(c.getTime());
-//                        Log.i(TAG, nowTime);
-//                        callInfoVo.setCallOutStartTime(nowTime);
-//
-//                        //不再用默认时间
-//                        //callInfoVo.setFwdAnswerTime(nowTime);
-//
-//                        // MyApplication.getContext().startService(new
-//                        // Intent(MyApplication.getContext(),
-//                        // AudioRecorderService.class));
-//
-//                        try {
-//                            recorder.setPhoneNumber(incomingNumber);
-//                            recorder.setIsCommingNumber(false);
-//                            if (!recorder.isCommingNumber() && !recorder.isStarted()) {
-//                                Log.i(TAG, "去电已接通 启动录音机");
-//
+
+
+                            // 开启一个子线程，进行网络操作，等待有返回结果，使用handler通知UI
+                            new Thread(networkTask).start();
+
+                        }
+
+                        phoneState = "CALL_STATE_IDLE";
+                    }
+
+                    break;
+                }
+                case TelephonyManager.CALL_STATE_OFFHOOK: {
+                    if (!"CALL_STATE_OFFHOOK".equals(phoneState)) {
+                        phoneState = "CALL_STATE_OFFHOOK";
+
+                        // System.out.println("接听");
+                        Log.i(TAG, "接听");
+
+                        Calendar c = Calendar.getInstance();
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        String nowTime = sdf.format(c.getTime());
+                        Log.i(TAG, nowTime);
+                        callInfoVo.setCallOutStartTime(nowTime);
+
+                        //不再用默认时间
+                        //callInfoVo.setFwdAnswerTime(nowTime);
+
+                        // MyApplication.getContext().startService(new
+                        // Intent(MyApplication.getContext(),
+                        // AudioRecorderService.class));
+
+                        try {
+                            recorder.setPhoneNumber(incomingNumber);
+                            recorder.setIsCommingNumber(false);
+                            if (!recorder.isCommingNumber() && !recorder.isStarted()) {
+                                Log.i(TAG, "去电已接通 启动录音机");
+
 //                                try {
 //                                    recorder.start();
 //                                } catch (InterruptedException e) {
 //                                    e.printStackTrace();
 //                                }
-//                            }
-//                        }catch(Exception e){
-//                            e.printStackTrace();
+                            }
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+
+//                        if(AudioTest.getInstance().isInitSucces()){
+//                            AudioTest.getInstance().startAudio(incomingNumber);
+//                            Log.i(TAG, "去电已接通 启动录音机");
+//                        }else{
+//                            Log.i(TAG, "录音及没有成功初始化");
 //                        }
-//
-////                        if(AudioTest.getInstance().isInitSucces()){
-////                            AudioTest.getInstance().startAudio(incomingNumber);
-////                            Log.i(TAG, "去电已接通 启动录音机");
-////                        }else{
-////                            Log.i(TAG, "录音及没有成功初始化");
-////                        }
-//
-//                    }
-//
-//                    break;
-//                }
-//                case TelephonyManager.CALL_STATE_RINGING: {
-//                    if (!"CALL_STATE_RINGING".equals(phoneState)) {
-//                        phoneState = "CALL_STATE_RINGING";
-//
-//                        // System.out.println("响铃:来电号码" + incomingNumber);
-//                        Log.i(TAG, "响铃:来电号码" + incomingNumber);
-//
-//                        // 输出来电号码
-//                    }
-//
-//                    break;
-//                }
-//
-//                default: {
-//                    phoneState = "";
-//                    break;
-//                }
-//
-//            }
+
+                    }
+
+                    break;
+                }
+                case TelephonyManager.CALL_STATE_RINGING: {
+                    if (!"CALL_STATE_RINGING".equals(phoneState)) {
+                        phoneState = "CALL_STATE_RINGING";
+
+                        // System.out.println("响铃:来电号码" + incomingNumber);
+                        Log.i(TAG, "响铃:来电号码" + incomingNumber);
+
+                        // 输出来电号码
+                    }
+
+                    break;
+                }
+
+                default: {
+                    phoneState = "";
+                    break;
+                }
+
+            }
 
         }
 
