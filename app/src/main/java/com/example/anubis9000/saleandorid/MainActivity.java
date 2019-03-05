@@ -81,9 +81,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private com.tencent.smtt.sdk.WebView tencent_webview;
-//    private String backendUrl = MyApplication.getContext().getString(R.string.backend_url);
+    private String backendUrl = MyApplication.getContext().getString(R.string.backend_url);
 
-    private String backendUrl = "http://这里填写域名?rememberMe=true";
+//    private String backendUrl = "http://msale.xkw.cn?rememberMe=true";
 
     private String url = backendUrl;
 
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         tencent_webview = (com.tencent.smtt.sdk.WebView) findViewById(R.id.mainWebview);
 
         Random random = new Random();
-        url = url + "&a=" + DateUtils.date2Int(new Date()) + random.nextInt(100);
+        url = url + "&agent=yes&a=" + DateUtils.date2Int(new Date()) + random.nextInt(100);
 
         tencent_webview.loadUrl(url);
         com.tencent.smtt.sdk.WebSettings webSettings = tencent_webview.getSettings();
