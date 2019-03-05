@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">销售系统</string>
-    <string name="backend_url">http://10.1.1.74:8000?rememberMe=true</string>
+    <string name="backend_url">http://msale.xkw.cn?rememberMe=true</string>
 </resources>
