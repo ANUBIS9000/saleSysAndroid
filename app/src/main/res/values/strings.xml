@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">销售系统</string>
+    <string name="app_name">凤凰微营销</string>
     <string name="backend_url">http://msale.xkw.cn?rememberMe=true</string>
 </resources>
